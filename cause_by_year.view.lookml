@@ -29,4 +29,8 @@
   - measure: count
     type: count
     drill_fields: []
+  
+  - measure: death_total
+    type: sum
+    sql: ${deaths}
 
