@@ -19,6 +19,7 @@
 
 - explore: by_county
   from: fips_codes
+  access_filter_fields: [death_by_county.gender, death_by_county.race]
   joins:
       - join: death_by_county
         relationship: one_to_many
