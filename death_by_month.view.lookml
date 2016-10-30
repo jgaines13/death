@@ -18,7 +18,15 @@
     type: string
     sql: ${TABLE}.month
 
+  - dimension: month_only
+    type: string
+    sql: split_part(${month}, '/', 2) 
+    
   - measure: count
     type: count
     drill_fields: []
+  
+  - measure: total_deaths
+    type: sum
+    sql: ${deaths}
 

@@ -24,6 +24,14 @@
       else split_part(trim(trailing 'years' from ${age_group}), '-', 1)::integer
       end
 
+  - dimension: title
+    type: string
+    sql: '1'
+    html: |
+      <head> 
+        <style> @font-face { font-family: King-Basil; src: url('King-Basil-Lite.otf'); } </style> </head>
+        <body> <p style="background: #00e6ac;color: black;font-family:King-Basil;"> "Lets talk about death" </p></body>
+    
 
   - dimension: age_group_code
     type: string
@@ -41,8 +49,11 @@
     hidden: true
 
   - dimension: crude_rate
-    type: string
-    sql: ${TABLE}.crude_rate
+    type: number
+    sql: |
+      (case when ${TABLE}.crude_rate='NULL' or ${TABLE}.crude_rate='Unreliable' or ${TABLE}.crude_rate='Not Applicable' then NULL
+      else ${TABLE}.crude_rate::decimal
+      end)
 
   - dimension: deaths
     type: number
@@ -103,10 +114,19 @@
     type: sum
     sql: ${population}
     
-  - measure: death_by_pop
+  - measure: weighted_death
     type: number
-    value_format_name: percent_4
-    sql: (${total_deaths} * 1.000)/nullif(${total_population},0)
+    sql: ((${total_deaths} * 1.000)/nullif(${total_population},0)) * 1000
+   
+  - measure: percent_of_deaths
+    type: avg
+    sql: ${percent_total_deaths}
+    
+  - measure: avg_crude_deaths
+    type: avg
+    sql: ${crude_rate}
+    
+
     
 #   - measure: display_value
 #     type: number

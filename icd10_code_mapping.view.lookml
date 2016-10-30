@@ -1,5 +1,5 @@
 - view: icd10_code_mapping
-  sql_table_name: public.icd10_code_mapping
+  sql_table_name: public.icd10_complete_mapping
   fields:
 
   - dimension: category
@@ -39,6 +39,15 @@
   - dimension: subcategory_code
     type: string
     sql: ${TABLE}.subcategory_code
+  
+  - dimension: cause_of_death
+    type: string
+    sql: ${TABLE}.cause_of_death
+  
+  - dimension: cause_of_death_code
+    type: string
+    sql: ${TABLE}.cause_of_death_code
+  
 
   - measure: count
     type: count

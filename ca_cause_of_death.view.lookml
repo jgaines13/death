@@ -9,6 +9,18 @@
   - dimension: cause_of_death_code
     type: string
     sql: ${TABLE}.cause_of_death_code
+  
+  - dimension: gun_deaths
+    type: yesno
+    sql: |
+      (${cause_of_death} like '%discharge%' AND  ${cause_of_death} not in  ('Urethral discharge',
+             'Discharge of firework',
+             'Legal intervention involving firearm discharge'))
+      
+  
+  - dimension: vehicle_deaths
+    type: yesno
+    sql: (${cause_of_death} like '%vehicle%')
 
   - dimension: crude_rate
     type: number
@@ -21,6 +33,7 @@
   - dimension: percent_of_total_deaths
     type: number
     sql: ${TABLE}.percent_of_total_deaths
+    value_format_name: percent_2
 
   - dimension: population
     type: number
@@ -37,4 +50,12 @@
   - measure: count
     type: count
     drill_fields: []
+  
+  - measure: crude_rate_avg
+    type: avg
+    sql: ${crude_rate}
+  
+  - measure: total_deaths
+    type: sum
+    sql: ${deaths}
 

@@ -13,6 +13,9 @@
   - dimension: crude_rate
     type: number
     sql: ${TABLE}.crude_rate
+#       (case when ${TABLE}.crude_rate='NULL' or ${TABLE}.crude_rate='Unreliable' or ${TABLE}.crude_rate='Not Applicable' then NULL
+#       else ${TABLE}.crude_rate::decimal
+#       end)
 
   - dimension: deaths
     type: number
@@ -33,4 +36,8 @@
   - measure: death_total
     type: sum
     sql: ${deaths}
+  
+  - measure: avg_crude_deaths
+    type: avg
+    sql: ${crude_rate}
 

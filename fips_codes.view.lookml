@@ -21,6 +21,7 @@
   - dimension: state
     type: string
     sql: ${TABLE}.state
+    map_layer: us_states
 
   - dimension: statefp
     type: string
