@@ -30,12 +30,53 @@ view: death_by_county {
   dimension: title {
     type: string
     sql: 1 ;;
-    html: <head>
-        <style> @font-face { font-family: King-Basil; src: url('King-Basil-Lite.otf'); } </style> </head>
-        <body> <p style="background: #00e6ac;color: black;font-family:King-Basil;"> "Lets talk about death" </p></body>
+    html:
+    <h1 style="font-size:300%"> Let's talk about death.</h1>
+    <img src="http://i.giphy.com/mo8MAe2maHrva.gif" />
       ;;
   }
 
+  dimension: all_done {
+    sql: 1 ;;
+    html:
+    <h1> And One Last Cat Gif </h1>
+    <img src="http://i.giphy.com/iPiUxztIL4Sl2.gif" />;;
+  }
+  dimension: lifespan_title {
+    type: string
+    sql: 1 ;;
+    html:
+    <h1 style="background: #c4d4ed;color: black;"> <font size="50%"> Lifespan Statistics </font> <br> <i> When do people die? Doing what? </i> </h1>
+      ;;
+  }
+  dimension: seperator {
+    sql: 1 ;;
+    html:
+      <h1 style="background: #c4d4ed;color: #c4d4ed;"> mwhahha mystery text  </h1>
+ ;;
+  }
+  dimension: Time_title {
+    type: string
+    sql: 1 ;;
+    html:
+    <h1 style="background: #c4d4ed;color: black;"> <font size="50%"> Time of Death Statistics </font> <br> <i> When are you most likely to die? </i> </h1>
+      ;;
+  }
+  dimension: Cause_title {
+    type: string
+    sql: 1 ;;
+    html:
+    <h1 style="background: #c4d4ed;color:black ;"> <font size="50%"> Cause of Death Statistics </font> <br> <i> Let's bucket them! </i> </h1>
+      ;;
+  }
+
+  dimension: Hypersensitized_title {
+    type: string
+    sql: 1 ;;
+    html:
+    <h1 style="background: #c4d4ed;color:black ;"> <font size="50%"> Causes of Death by Race and Gender </font> <br> <i> Graphs that could easily be disguised as hypersensitized news stories </i> </h1>
+      ;;
+  }
   dimension: age_group_code {
     type: string
     sql: ${TABLE}.age_group_code ;;
@@ -123,9 +164,30 @@ view: death_by_county {
     drill_fields: []
   }
 
+  dimension: category_short {
+    type: string
+    sql: ${icd10_code_mapping.category_short} ;;
+  }
   measure: total_deaths {
     type: sum
     sql: ${deaths} ;;
+    drill_fields: [icd10_subchapter, count]
+#     html:
+#       {% if icd10_code_mapping.category_short._value == 'Cancer' %}
+#         <a href="https://localhost:9999/explore/death/deathrecords?qid=5xUT46OLeN2Id8avGpJCQ8&toggle=vis"> {{ value }}  </a>
+#       {% elsif icd10_code_mapping.category_short._value == 'Circulatory' %}
+#         <a href="https://localhost:9999/explore/death/deathrecords?qid=5xUT46OLeN2Id8avGpJCQ8&toggle=vis"> {{ value }}  </a>
+#       {% elsif icd10_code_mapping.category_short._value == 'Congenital' %}
+#         <a> {{value}} </a>
+#       {% elsif icd10_code_mapping.category_short._value == 'Digestive' %}
+#         <a> {{value}} </a>
+#       {% elsif icd10_code_mapping.category_short._value == 'Endocrine' %}
+#         <a> {{value}} </a>
+#       {% elsif icd10_code_mapping.category_short._value == 'External Causes' %}
+#        <a> {{value}} </a>
+#       {% else %}
+#         {{value}}
+#       {% endif %} ;;
   }
 
   measure: total_population {
@@ -143,10 +205,18 @@ view: death_by_county {
     sql: ${percent_total_deaths} ;;
   }
 
-  measure: avg_crude_deaths {
-    type: average
-    sql: ${crude_rate} ;;
+  measure: crude_deaths {
+    type: max
+    sql: (${crude_rate}/10) ;;
   }
+
+#     html:
+#        {% if icd10_code_mapping.category_short._value == 'Cancer' %}
+#        <a href="https://localhost:9999/looks/54">  {{ rendered_value }} </a>
+#       {% else %}
+#       <p> {{ rendered_value }} </p>
+#     {% endif %};;
+
 }
 
 #   - measure: display_value

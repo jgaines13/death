@@ -92,6 +92,12 @@ view: icd10_code_mapping {
 
       else: "Other"
     }
+#     html:
+#        {% if icd10_code_mapping.category_short._value == 'Cancer' %}
+#        <a href="https://localhost:9999/looks/54">  {{ rendered_value }} </a>
+#       {% else %}
+#       <p> {{ rendered_value }} </p>
+#     {% endif %};;
   }
 
   dimension: category_code {

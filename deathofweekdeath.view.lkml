@@ -9,6 +9,7 @@ view: deathofweekdeath {
   dimension: description {
     type: string
     sql: ${TABLE}.description ;;
+    order_by_field: code
   }
 
   measure: count {
