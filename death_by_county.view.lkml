@@ -32,21 +32,44 @@ view: death_by_county {
     sql: 1 ;;
     html:
     <h1 style="font-size:300%"> Let's talk about death.</h1>
-    <img src="http://i.giphy.com/mo8MAe2maHrva.gif" />
+    <img src="http://i.giphy.com/mo8MAe2maHrva.gif">
       ;;
   }
-
-  dimension: all_done {
-    sql: 1 ;;
+  dimension: second_dimension_cat {
+    type: string
+    sql: 'ON CATS.' ;;
+    drill_fields: [third_dimension_cat]
     html:
-    <h1> And One Last Cat Gif </h1>
-    <img src="http://i.giphy.com/iPiUxztIL4Sl2.gif" />;;
-  }
+    <a href="{{ link }}" style="color: purple;"> <img src="http://i.giphy.com/eDgmbiQcujjsA.gif" width="650" height="400"> {{ value }}</a>;;
+    }
+
+  #   <h1> Second Dimension Cat </h1>
+  #   <a href="/looks/65" target="_blank">
+  #   <img src="http://i.giphy.com/eDgmbiQcujjsA.gif" width="650" height="400" ></a>;;
+  # }
+
+  dimension: third_dimension_cat {
+    type: string
+    sql: 'ON CATS.' ;;
+    html:
+     <a href="{{ link }}" style="color: purple;"> <img src="http://i.giphy.com/C9o0hV1zdqHwQ.gif" width="650" height="400"> {{ value }}</a>;;
+    }
+
+  #   <h1> Third Dimension Cat </h1>
+  #   <img src="http://i.giphy.com/C9o0hV1zdqHwQ.gif" width="650" height="400"  />;;
+  # }
+    dimension: all_done {
+    sql: 'CATS.' ;;
+    drill_fields: [second_dimension_cat]
+    html:
+    <a href="{{ link }}" style="color: purple;"> <img src="http://i.giphy.com/iPiUxztIL4Sl2.gif"> {{ value }}</a>;;
+    }
+
   dimension: lifespan_title {
     type: string
     sql: 1 ;;
     html:
-    <h1 style="background: #c4d4ed;color: black;"> <font size="50%"> Lifespan Statistics </font> <br> <i> When do people die? Doing what? </i> </h1>
+    <h1 style="background: #c4d4ed;color: black"> <font size="50%"> Lifespan Statistics </font> <br> <i> When do people die? Doing what? </i> </h1>
       ;;
   }
   dimension: seperator {

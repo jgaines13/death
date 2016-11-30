@@ -313,3 +313,4 @@ explore: death_by_month {
     sql_on: ${death_by_month.icd_sub_code}=${icd10_code_mapping.subcategory_code} ;;
   }}
 explore: above_avg_causes_by_state {}
+explore: percentile_of_codes {}
