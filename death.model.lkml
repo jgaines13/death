@@ -138,6 +138,7 @@ explore: deathrecords {
 }
 
 explore: all_causes {
+  hidden: yes
   join: icd10_code_mapping {
     relationship: many_to_one
     sql_on: ${all_causes.code}=${icd10_code_mapping.cause_of_death_code} ;;
@@ -145,6 +146,7 @@ explore: all_causes {
 }
 
 explore: ca_cause_of_death {
+  hidden: yes
   join: icd10_code_mapping {
     relationship: many_to_one
     sql_on: ${ca_cause_of_death.cause_of_death_code}=${icd10_code_mapping.cause_of_death_code} ;;
@@ -152,6 +154,7 @@ explore: ca_cause_of_death {
 }
 
 explore: cause_by_year {
+  hidden: yes
   join: icd10_code_mapping {
     relationship: many_to_one
     sql_on: ${cause_by_year.cause_of_death_code}=${icd10_code_mapping.cause_of_death_code} ;;
@@ -174,6 +177,7 @@ explore: by_county {
 }
 
 explore: death_by_county {
+  hidden: yes
   persist_for: "20 hours"
   join: icd10_code_mapping {
     relationship: many_to_one
@@ -182,6 +186,7 @@ explore: death_by_county {
 }
 
 explore: entityaxisconditions {
+  hidden: yes
   join: deathrecords {
     relationship: many_to_one
     sql_on: ${deathrecords.id}=${entityaxisconditions.deathrecordid} ;;
@@ -308,6 +313,7 @@ explore: entityaxisconditions {
 }
 
 explore: death_by_month {
+  hidden: yes
   join: icd10_code_mapping {
     relationship: many_to_one
     sql_on: ${death_by_month.icd_sub_code}=${icd10_code_mapping.subcategory_code} ;;

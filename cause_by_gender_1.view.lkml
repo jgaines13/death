@@ -1,4 +1,6 @@
-explore: cause_by_gender_1 {}
+explore: cause_by_gender_1 {
+  label: "Cause By Gender"
+}
 view: cause_by_gender_1 {
   derived_table: {
     sql: with percents as (
