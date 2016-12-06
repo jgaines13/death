@@ -1,7 +1,7 @@
 view: above_avg_causes_by_state {
   derived_table: {
     sql:
-      with nat_avg as
+       with nat_avg as
           (
             SELECT
               case when icd10_subchapter = 'proteinuria and hypertensive disorders in pregnancy childbirth and the puerperium' then 'Oedema proteinuria and hypertensive disorders in pregnancy childbirth and the puerperium' else icd10_subchapter end as icd10_subchapter,
@@ -23,7 +23,8 @@ view: above_avg_causes_by_state {
             SELECT
               trim( both ' ' from state) state,
               case when icd10_subchapter = 'proteinuria and hypertensive disorders in pregnancy childbirth and the puerperium' then 'Oedema proteinuria and hypertensive disorders in pregnancy childbirth and the puerperium' else icd10_subchapter end as icd10_subchapter,
-              sum(deaths) as icd_state_deaths
+              sum(deaths) as icd_state_deaths,
+              row_number() over (partition by trim( both ' ' from state) order by sum(deaths) desc) as ordered_death_rate
             FROM death_by_county d
             GROUP by 1,2
           )
@@ -41,39 +42,42 @@ view: above_avg_causes_by_state {
             SELECT
               state,
               s.icd10_subchapter,
+              s.icd_state_deaths,
               (cause_state_rate/nat_death_rate)  as icddifferencial
             FROM state_death_rate s
             INNER JOIN nat_avg n
               ON s.icd10_subchapter = n.icd10_subchapter
             WHERE s.icd10_subchapter not like '%heart disease%'
-              AND s.icd10_subchapter not like '%Malignant neoplasms%'
+              AND s.icd10_subchapter not like '%eoplasms%'
               AND s.icd10_subchapter not like '%eneral%'
               AND s.icd10_subchapter<>'Event of undetermined intent'
               AND s.icd10_subchapter not like '%not elsewhere classified'
+              AND s.icd10_subchapter <> 'Ill-defined and unknown causes of mortality'
+              AND s.icd_state_deaths > (SELECT icd_state_deaths FROM state_death_rate sdr WHERE s.state = sdr.state AND ordered_death_rate = 26 )
           )
-        --and s.icd10_subchapter not like '%ther%' and s.icd10_subchapter not like '%eneral%')
-      , ranking as
-        (
-          SELECT
-            *,
-            row_number() over (partition by state order by icddifferencial desc)
-          FROM difference
-        )
-
       , top_causes as
         (
-          SELECT * FROM ranking where row_number = 1
-          )
+          SELECT * FROM
+            (
+            SELECT
+              *,
+              row_number() over (partition by state order by icddifferencial desc)
+            FROM difference
+            ) a
+          WHERE row_number = 1
+        )
 
-       SELECT
+      SELECT
         t.state,
         t.icd10_subchapter,
         icddifferencial,
-         1.00 * icd_state_deaths/nat_total_deaths percent_of_total,
+        t.icd_state_deaths,
+        nat_total_deaths,
+        1.00 * t.icd_state_deaths/nat_total_deaths percent_of_total,
         dense_rank() over (order by lower(t.icd10_subchapter)) as icdbucket
-        FROM top_causes t
-        inner join nat_avg n on t.icd10_subchapter = n.icd10_subchapter
-        inner join icdstate_deaths td on td.icd10_subchapter = t.icd10_subchapter and t.state = td.state
+      FROM top_causes t
+      INNER JOIN nat_avg n on t.icd10_subchapter = n.icd10_subchapter
+      INNER JOIN icdstate_deaths td on td.icd10_subchapter = t.icd10_subchapter and t.state = td.state
        ;;
   }
 
