@@ -8,8 +8,9 @@ view: agerecode12 {
 
   dimension: description {
     type: string
-    sql: ${TABLE}.description ;;
-  }
+    sql: case when ${TABLE}.description = '5 - 14 years' or ${TABLE}.description = '1 - 4 years' then '1 - 14 years'
+    else ${TABLE}.description end;;
+    }
 
   measure: count {
     type: count

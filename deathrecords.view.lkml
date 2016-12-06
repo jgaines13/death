@@ -304,7 +304,39 @@ view: deathrecords {
 
   measure: count {
     type: count
-    drill_fields: [id, entityaxisconditions.count, recordaxisconditions.count]
+    drill_fields: [icd10code_description, count]
+  }
+
+  measure: count_formatted {
+    type: count
+    hidden: yes
+    drill_fields: [icd10code_description, count]
+  }
+
+  dimension: all_records {
+    type: string
+    sql: '' ;;
+  }
+  measure: count_autopsy {
+    type: count
+    filters: {
+      field: autopsy
+      value: "Y"
+    }
+  }
+  measure: count_natural {
+    type: count
+    filters: {
+      field: mannerofdeath.description
+      value: "Natural"
+    }
+  }
+  measure: count_external {
+    type: count
+    filters: {
+    field: mannerofdeath.description
+    value: "Accident, Homicide, Suicide"
+  }
   }
   measure: count_vehicle {
     type: count

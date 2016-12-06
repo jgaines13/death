@@ -33,6 +33,7 @@ view: death_by_county {
     html:
     <h1 style="font-size:300%"> Let's talk about death.</h1>
     <img src="http://i.giphy.com/mo8MAe2maHrva.gif">
+    <a  href="https://localhost:9999/dashboards/2" style="font-size:30%"> <br> About the Data </a>
       ;;
   }
   dimension: second_dimension_cat {
@@ -72,10 +73,23 @@ view: death_by_county {
     <h1 style="background: #c4d4ed;color: black"> <font size="50%"> Lifespan Statistics </font> <br> <i> When do people die? Doing what? </i> </h1>
       ;;
   }
+
+  dimension: Sex_title {
+    type: string
+    sql: 1 ;;
+    html:
+    <h1 style="background: #dde0e6; color: black"> <font size="6px"> Diseases that disproportionately affect males and females <br> <br> </h1>
+      ;;
+  }
+
+
+
   dimension: seperator {
     sql: 1 ;;
     html:
-      <h1 style="background: #c4d4ed;color: #c4d4ed;"> mwhahha mystery text  </h1>
+      <h1 style="background: #c4d4ed;color: #c4d4ed;"> mwhahha mystery text <br> <br> </h1>
+      <h1> What Cause of Death Disproportionately Hits Each State? </h1>
+      <h1 style="background: #c4d4ed;color: #c4d4ed;"> mwhahha mystery text <br> </h1>
  ;;
   }
   dimension: Time_title {
@@ -89,7 +103,7 @@ view: death_by_county {
     type: string
     sql: 1 ;;
     html:
-    <h1 style="background: #c4d4ed;color:black ;"> <font size="50%"> Cause of Death Statistics </font> <br> <i> Let's bucket them! </i> </h1>
+    <h1 style="background: #c4d4ed;color:black ;"> <font size="50%"> Cause of Death Statistics </font> <br> <i> Let's bucket them! </i> <br> </h1>
       ;;
   }
 
@@ -97,7 +111,7 @@ view: death_by_county {
     type: string
     sql: 1 ;;
     html:
-    <h1 style="background: #c4d4ed;color:black ;"> <font size="50%"> Causes of Death by Race and Gender </font> <br> <i> Graphs that could easily be disguised as hypersensitized news stories </i> </h1>
+    <h1 style="background: #c4d4ed;color:black ;"> <font size="50%"> National Conversations around Causes of Death </font> <br> <i> A closer look at some hypersensitized news stories </i> </h1>
       ;;
   }
   dimension: age_group_code {

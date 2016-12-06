@@ -47,14 +47,14 @@ view: cause_by_gender_1 {
     type: string
     sql: replace(replace(replace(${description_list}, '|RECORD|', '                                                        '), 'unspecified', ''), ',', '') ;;
      html:
-      <span style="white-space: pre-wrap; color: purple; font-size: 125%">{{ value }} </span>;;
+      <span style="white-space: pre-wrap; color: #7b3294; font-size: 125%">{{ value }} </span>;;
 
   }
   measure: top_icd10_codes_m{
     type: string
     sql: replace(replace(replace(replace(replace(${description_list}, '|RECORD|', '                                                                           '), 'unspecified', ''), ',', ' '), 'so described', ''), 'not elsewhere classified', '')          ;;
     html:
-      <span style="white-space: pre-wrap; color:green; font-size: 125%">{{ value }} </span>;;
+      <span style="white-space: pre-wrap; color:#008837; font-size: 125%">{{ value }} </span>;;
 
     }
   dimension: femalepic {
