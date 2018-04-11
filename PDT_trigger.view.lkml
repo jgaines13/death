@@ -27,9 +27,9 @@ view: pdt_trigger {
   }
 }
 
-# datagroup: everyhour {
-#   sql_trigger: SELECT DATE_PART('hour', NOW()) ;;
-# }
+datagroup: everyhour {
+  sql_trigger: SELECT DATE_PART('hour', NOW()) ;;
+}
 # view: pdt_dg {
 #   derived_table: {
 #     sql: select * from public.activitycode  ;;
